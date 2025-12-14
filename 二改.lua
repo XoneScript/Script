@@ -10568,6 +10568,75 @@ PaddingBottom=UDim.new(0,as.UIPadding/2),
 })
 })
 
+local rainbowBorder = ak("UIStroke", {
+    Name = "RainbowBorder",
+    Thickness = 3, 
+    Transparency = 0.15, 
+    Parent = as.UIElements.Main, 
+}, {
+    ak("UIGradient", {
+        Name = "RainbowGradient",
+        Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),      -- 红
+            ColorSequenceKeypoint.new(0.166, Color3.fromRGB(255, 127, 0)), -- 橙
+            ColorSequenceKeypoint.new(0.333, Color3.fromRGB(255, 255, 0)), -- 黄
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 255, 0)),    -- 绿
+            ColorSequenceKeypoint.new(0.666, Color3.fromRGB(0, 0, 255)),  -- 蓝
+            ColorSequenceKeypoint.new(0.833, Color3.fromRGB(75, 0, 130)), -- 靛
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(143, 0, 255))    -- 紫
+        }),
+        Rotation = 0,
+    })
+})
+
+-- 2. 添加旋转控制函数到窗口对象
+function as.StartRainbowRotation(p, speed)
+    local speed = speed or 30
+    
+    -- 停止已有的旋转
+    if as.rainbowRotationConnection then
+        as.rainbowRotationConnection:Disconnect()
+    end
+    
+    as.rainbowRotationConnection = game:GetService("RunService").RenderStepped:Connect(function(deltaTime)
+        local gradient = rainbowBorder:FindFirstChild("RainbowGradient") or rainbowBorder.UIGradient
+        if gradient then
+            local currentRotation = gradient.Rotation or 0
+            local newRotation = (currentRotation + speed * deltaTime) % 360
+            gradient.Rotation = newRotation
+        end
+    end)
+    
+    return as
+end
+
+function as.StopRainbowRotation(p)
+    if as.rainbowRotationConnection then
+        as.rainbowRotationConnection:Disconnect()
+        as.rainbowRotationConnection = nil
+    end
+    return as
+end
+
+function as.SetRainbowBorderColor(p, colors)
+    local gradient = rainbowBorder:FindFirstChild("RainbowGradient") or rainbowBorder.UIGradient
+    if gradient and colors then
+        gradient.Color = ColorSequence.new(colors)
+    end
+    return as
+end
+
+function as.SetRainbowBorderThickness(p, thickness)
+    if rainbowBorder and thickness then
+        rainbowBorder.Thickness = thickness
+    end
+    return as
+end
+
+task.spawn(function()
+    task.wait(0.5) 
+    as:StartRainbowRotation(25)
+end)
 local az=ak("ImageLabel",{
 Image="rbxassetid://8992230677",
 ThemeTag={
