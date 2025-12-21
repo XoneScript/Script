@@ -10641,26 +10641,31 @@ AnchorPoint=Vector2.new(0,1),
 BackgroundTransparency=1,
 Visible=as.User.Enabled or false,
 },{
-aj.NewRoundFrame(as.UICorner-(as.UIPadding/2),"SquircleOutline",{
-Size=UDim2.new(1,0,1,0),
-ThemeTag={
-ImageColor3="Text",
-},
-ImageTransparency=1,
-Name="Outline"
+aj.NewRoundFrame(as.UICorner,"SquircleOutline2",{
+    Size=UDim2.new(1,0,1,0),
+    ImageTransparency=0.3,  -- 降低透明度让边框可见
 },{
-ak("UIGradient",{
-Rotation=78,
-Color=ColorSequence.new{
-ColorSequenceKeypoint.new(0.0,Color3.fromRGB(255,255,255)),
-ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,255,255)),
-ColorSequenceKeypoint.new(1.0,Color3.fromRGB(255,255,255)),
-},
-Transparency=NumberSequence.new{
-NumberSequenceKeypoint.new(0.0,0.1),
-NumberSequenceKeypoint.new(0.5,1),
-NumberSequenceKeypoint.new(1.0,0.1),
-}
+    ac("UIGradient",{
+        Rotation=360,  -- 改为360度旋转
+        Color=ColorSequence.new{
+            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+            ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
+            ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
+            ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
+            ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
+            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
+            ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
+            ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
+            ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
+            ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
+            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
+        },
+        Transparency=NumberSequence.new{
+            NumberSequenceKeypoint.new(0,0.3),
+            NumberSequenceKeypoint.new(0.5,0.5),
+            NumberSequenceKeypoint.new(1,0.3)
+        }
+    })
 }),
 }),
 aj.NewRoundFrame(as.UICorner-(as.UIPadding/2),"Squircle",{
