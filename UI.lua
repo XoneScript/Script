@@ -4185,24 +4185,7 @@ BackgroundTransparency=.25,
 ZIndex=99,
 BackgroundColor3=Color3.new(0,0,0),
 },{
-ac("UIScale",{
-Scale=1,
-}),
-ac("UICorner",{
-CornerRadius=UDim.new(1,0)
-}),
-ac("UIStroke",{
-Thickness=1,
-ApplyStrokeMode="Border",
-Color=Color3.new(1,1,1),
-Transparency=0,
-},{
-ac("UIGradient",{
-Color=ColorSequence.new(Color3.fromHex"40c9ff",Color3.fromHex"e81cff")
-})
-}),
-aj,
-ak,
+
 
 ac("UIListLayout",{
 Padding=UDim.new(0,4),
@@ -10986,6 +10969,32 @@ Active=true,
 ar.WindUI.UIScaleObj,
 as.AcrylicPaint and as.AcrylicPaint.Frame or nil,
 az,
+
+-- 创建窗口主边框
+local UIStroke = ak("UIStroke", {
+    Thickness = 3,
+    ApplyStrokeMode = "Border",
+    Transparency = 0.2,
+    Color = Color3.fromRGB(255, 255, 255)
+})
+
+-- 为窗口主边框添加彩虹渐变
+local windowStrokeGradient = ak("UIGradient")
+windowStrokeGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
+    ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
+    ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
+    ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
+    ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
+    ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
+    ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
+    ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
+    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
+}
+windowStrokeGradient.Rotation = 360
+windowStrokeGradient.Parent = UIStroke
 aj.NewRoundFrame(as.UICorner,"Squircle",{
 ImageTransparency=1,
 Size=UDim2.new(1,0,1,-240),
