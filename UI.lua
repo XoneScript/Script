@@ -10570,9 +10570,9 @@ PaddingBottom=UDim.new(0,as.UIPadding/2),
 
 local az = ak("ImageLabel",{
     Image="rbxassetid://8992230677",
-    -- 直接设置颜色或留空，我们用渐变覆盖
-    ImageColor3 = Color3.new(1,1,1), -- 设置为白色（会被渐变覆盖）
-    ImageTransparency=0.3, -- 调低透明度让边框可见（原来是1完全透明）
+  
+    ImageColor3 = Color3.new(1,1,1), 
+    ImageTransparency=0.3, 
     Size=UDim2.new(1,120,1,116),
     Position=UDim2.new(0,-60,0,-58),
     ScaleType="Slice",
@@ -10580,8 +10580,7 @@ local az = ak("ImageLabel",{
     BackgroundTransparency=1,
     ZIndex=-999999999999999,
     Name="Blur",
-}, {
-    -- 添加彩虹渐变效果
+}, {    
     ak("UIGradient",{
         Color = ColorSequence.new{
             ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
@@ -10596,7 +10595,7 @@ local az = ak("ImageLabel",{
             ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
             ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
         },
-        Rotation = 360 -- 渐变旋转角度
+        Rotation = 360
     })
 })
 
@@ -10641,31 +10640,26 @@ AnchorPoint=Vector2.new(0,1),
 BackgroundTransparency=1,
 Visible=as.User.Enabled or false,
 },{
-aj.NewRoundFrame(as.UICorner,"SquircleOutline2",{
-    Size=UDim2.new(1,0,1,0),
-    ImageTransparency=0.3,  -- 降低透明度让边框可见
+aj.NewRoundFrame(as.UICorner-(as.UIPadding/2),"SquircleOutline",{
+Size=UDim2.new(1,0,1,0),
+ThemeTag={
+ImageColor3="Text",
+},
+ImageTransparency=1,
+Name="Outline"
 },{
-    ac("UIGradient",{
-        Rotation=360,  -- 改为360度旋转
-        Color=ColorSequence.new{
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
-            ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
-            ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
-            ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
-            ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
-            ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
-            ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
-            ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
-            ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
-        },
-        Transparency=NumberSequence.new{
-            NumberSequenceKeypoint.new(0,0.3),
-            NumberSequenceKeypoint.new(0.5,0.5),
-            NumberSequenceKeypoint.new(1,0.3)
-        }
-    })
+ak("UIGradient",{
+Rotation=78,
+Color=ColorSequence.new{
+ColorSequenceKeypoint.new(0.0,Color3.fromRGB(255,255,255)),
+ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,255,255)),
+ColorSequenceKeypoint.new(1.0,Color3.fromRGB(255,255,255)),
+},
+Transparency=NumberSequence.new{
+NumberSequenceKeypoint.new(0.0,0.1),
+NumberSequenceKeypoint.new(0.5,1),
+NumberSequenceKeypoint.new(1.0,0.1),
+}
 }),
 }),
 aj.NewRoundFrame(as.UICorner-(as.UIPadding/2),"Squircle",{
@@ -10906,22 +10900,41 @@ Name="Frame",
 })
 })
 
-function createAuthor(f)
-return ak("TextLabel",{
-Text=f,
-FontFace=Font.new(aj.Font,Enum.FontWeight.Medium),
-BackgroundTransparency=1,
-TextTransparency=0.35,
-AutomaticSize="XY",
-Parent=as.UIElements.Main and as.UIElements.Main.Main.Topbar.Left.Title,
-TextXAlignment="Left",
-TextSize=13,
-LayoutOrder=2,
-ThemeTag={
-TextColor3="WindowTopbarAuthor"
-},
-Name="Author",
-})
+local function createAuthor(f)
+    local authorLabel = ak("TextLabel",{
+        Text=f,
+        FontFace=Font.new(aj.Font,Enum.FontWeight.Medium),
+        BackgroundTransparency=1,
+        TextTransparency=0.35,
+        AutomaticSize="XY",
+        Parent=as.UIElements.Main and as.UIElements.Main.Main.Topbar.Left.Title,
+        TextXAlignment="Left",
+        TextSize=13,
+        LayoutOrder=2,
+        -- 移除 ThemeTag，直接设置颜色
+        TextColor3=Color3.fromRGB(255, 255, 255), -- 默认白色
+        Name="Author",
+    })
+    
+    -- 为 Author 添加彩虹渐变
+    local authorGradient = ak("UIGradient")
+    authorGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
+        ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
+        ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
+        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
+        ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
+        ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
+        ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
+    }
+    authorGradient.Rotation = 360
+    authorGradient.Parent = authorLabel
+    
+    return authorLabel
 end
 
 local f
@@ -10932,18 +10945,35 @@ f=createAuthor(as.Author)
 end
 
 
-local h=ak("TextLabel",{
-Text=as.Title,
-FontFace=Font.new(aj.Font,Enum.FontWeight.Light),
-BackgroundTransparency=1,
-AutomaticSize="XY",
-Name="Title",
-TextXAlignment="Left",
-TextSize=16,
-ThemeTag={
-TextColor3="WindowTopbarTitle"
-}
+local h = ak("TextLabel",{
+    Text=as.Title,
+    FontFace=Font.new(aj.Font,Enum.FontWeight.Light),
+    BackgroundTransparency=1,
+    AutomaticSize="XY",
+    Name="Title",
+    TextXAlignment="Left",
+    TextSize=16,
+    -- 移除 ThemeTag，直接设置颜色
+    TextColor3=Color3.fromRGB(255, 255, 255) -- 默认白色
 })
+
+-- 为 Title 添加彩虹渐变
+local titleGradient = ak("UIGradient")
+titleGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
+    ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
+    ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
+    ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
+    ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
+    ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
+    ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
+    ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
+    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
+}
+titleGradient.Rotation = 360
+titleGradient.Parent = h
 
 as.UIElements.Main=ak("Frame",{
 Size=as.Size,
