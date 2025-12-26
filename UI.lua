@@ -10390,7 +10390,35 @@ if not isfolder(as.Folder.."/assets")then
 makefolder(as.Folder.."/assets")
 end
 end
+-- 创建窗口彩虹渐变边框
+local UIStroke = ak("UIStroke", {
+    Thickness = 2,
+    ApplyStrokeMode = "Border",
+    Transparency = 0.2,
+    Color = Color3.fromRGB(255, 255, 255)
+})
 
+local windowGradient = ak("UIGradient")
+windowGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
+    ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
+    ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
+    ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
+    ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
+    ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
+    ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
+    ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
+    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
+}
+windowGradient.Rotation = 360
+windowGradient.Parent = UIStroke
+
+-- 然后继续原有的av变量
+local av = ak("UICorner",{
+    CornerRadius=UDim.new(0,as.UICorner)
+})
 local av=ak("UICorner",{
 CornerRadius=UDim.new(0,as.UICorner)
 })
@@ -10969,32 +10997,6 @@ Active=true,
 ar.WindUI.UIScaleObj,
 as.AcrylicPaint and as.AcrylicPaint.Frame or nil,
 az,
-
--- 创建窗口主边框
-local UIStroke = ak("UIStroke", {
-    Thickness = 3,
-    ApplyStrokeMode = "Border",
-    Transparency = 0.2,
-    Color = Color3.fromRGB(255, 255, 255)
-})
-
--- 为窗口主边框添加彩虹渐变
-local windowStrokeGradient = ak("UIGradient")
-windowStrokeGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
-    ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
-    ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
-    ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
-    ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
-    ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
-    ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
-    ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
-    ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
-    ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
-    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
-}
-windowStrokeGradient.Rotation = 360
-windowStrokeGradient.Parent = UIStroke
 aj.NewRoundFrame(as.UICorner,"Squircle",{
 ImageTransparency=1,
 Size=UDim2.new(1,0,1,-240),
